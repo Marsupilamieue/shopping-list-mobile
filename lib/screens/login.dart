@@ -26,7 +26,6 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -67,29 +66,29 @@ class _LoginPageState extends State<LoginPage> {
                 String password = _passwordController.text;
 
                 // Cek kredensial
+                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                 // Untuk menyambungkan Android emulator dengan Django pada localhost,
                 // gunakan URL http://10.0.2.2/
-                final response =
-                    await request.login("http://127.0.0.1:8000/auth/login/", {
-                  'username': username,
-                  'password': password,
-                });
+
+                final response = await request.login(
+                    "https://faris-zhafir-tutorial.pbp.cs.ui.ac.id./auth/login/",
+                    {
+                      'username': username,
+                      'password': password,
+                    });
 
                 if (request.loggedIn) {
                   String message = response['message'];
                   String uname = response['username'];
-                  // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => MyHomePage()),
                   );
-                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(SnackBar(
                         content: Text("$message Selamat datang, $uname.")));
                 } else {
-                  // ignore: use_build_context_synchronously
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
